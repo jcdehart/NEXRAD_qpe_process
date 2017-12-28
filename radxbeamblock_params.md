@@ -14,17 +14,17 @@ To download SRTM data for the entire globe (~15 GB compressed), use the followin
 ```
 wget -r https://dds.cr.usgs.gov/srtm/version2_1/SRTM3/
 ```
-Alternatively, subregions of the globe can be downloaded from subdirectories found at the following link. The files will then need to be unzipped into a directory.
+Alternatively, subregions of the globe can be downloaded from subdirectories at the aforementioned link. All files need to be unzipped.
 
 ## Parameter file
-Once the elevation data is downloaded and the radar parameters are collected, the parameter file will need to be updated to include these details.
+Once the elevation data and radar parameters are collected, the parameter file will need to be updated accordingly.
 
 ### Ensure parameter file is up to date
 To obtain the default parameter file, use the following command:
 ```
 /path/to/Radx/apps/RadxBeamBlock -print_params > param_file_name
 ```
-If you already have a parameter file and simply want to check for (and add) updated parameters, use the following command:
+If you already have a parameter file and simply want to check for (and add) updated parameters while retaining current parameters, use the following command:
 ```
 /path/to/Radx/apps/RadxBeamBlock -params orig_param_file_name -print_params > new_param_file_name
 ```
@@ -46,3 +46,14 @@ Caution: this is not a complete list, simply the most important for running the 
 - netcdf_style: if output_format is CFRADIAL, specify the netCDF format
 #### Output directory
 - output_dir: file will be written to this directory
+
+### Running RadxBeamBlock
+To check all command line options for RadxBeamBlock, including debugging options, type the following command into a terminal.
+```
+/path/to/Radx/apps/RadxBeamBlock -h
+```
+Once your parameter file is complete, use a command similar to the following to run the application:
+```
+/path/to/Radx/apps/RadxBeamBlock -params param_file_name
+```
+Depending on the number of azimuths, elevations, and gates, this code can take 15-30 minutes to run. 
