@@ -47,7 +47,7 @@ Caution: this is not a complete list, simply the most important for running the 
 #### Output directory
 - output_dir: file will be written to this directory
 
-### Running RadxBeamBlock
+## Running RadxBeamBlock
 To check all command line options for RadxBeamBlock, including debugging options, type the following command into a terminal.
 ```
 /path/to/Radx/apps/RadxBeamBlock -h
