@@ -31,8 +31,8 @@ If you already have a parameter file and simply want to check for (and add) upda
 
 ### Specific parameters to edit
 Caution: this is not a complete list, simply the most important for running the code. Read through the entire parameter file.
-#### Input parameters
-- input_dem_path: link to folder containing elevation data
+#### Input params
+- input_dem_path: directory containing elevation data
 - input_data_format: choose elevation data format from list
 #### Radar parameters
 - time: specific time not important as it will be used for all timesteps 
@@ -41,8 +41,8 @@ Caution: this is not a complete list, simply the most important for running the 
 - horiz_beam_width_deg/vert_beam_width_deg
 - gates: specify the initial gate distance, gate spacing (both in km), and number of gates in each beam
 - azimuths: specify the initial angle, spacing, and number of beams
-#### Output parameters
+#### Output format
 - output_format: select the preferred file type
 - netcdf_style: if output_format is CFRADIAL, specify the netCDF format
-
-
+#### Output directory
+- output_dir: file will be written to this directory
