@@ -1,25 +1,25 @@
 # RadxPartRain
-This document describes the application that ingests polarimetric radar data and produces three-dimensional fields of the particle identification (PID) and precipitation rates.
+RadxPartRain ingests polarimetric radar data and produces three-dimensional fields of the NCAR particle identification (PID) and various precipitation rates.
 
 ## Prerequesites
 The following items are required:
 - Polarimetric radar data (any Radx supported format, e.g., cfradial)
 - PID fuzzy logic thresholds file
-- Sounding data (either observed or simulated)
-- Precipitation rate coefficients (e.g., R(Z), R(Z,ZDR))
+- Sounding data (either from observations or a numerical model)
+- Precipitation rate coefficients (e.g., those found in R(Z) or R(Z,ZDR) equations)
 
 ## PID thresholds file
 The specific thresholds will need to be tuned to the specific radar. NCAR has some example files that have been tuned for [S-BAND in fast alternating mode (FHV)](https://ral.ucar.edu/projects/titan/docs/radial_formats/pid_thresholds.sband.alt.txt) and [C-BAND in simultaneous-transmit (SHV) mode](https://ral.ucar.edu/projects/titan/docs/radial_formats/pid_thresholds.cband.shv.txt).
-These thresholds describe the membership functions for each PID category and polarimetric field combination and the variable weights for each particle type. The file also contains a place to enter a sounding, if the radar files cover a narrow time period; otherwise, the sounding will be overwritten by provided data, which is explained below. The particle types are most sensitive to temperature, Zh, Zdr, and the standard deviations of Zdr and PhiDP. 
+These thresholds describe the membership functions for each combination of the PID category and polarimetric field as well as the variable weights for each particle type. The file also contains a place to enter a sounding, if the radar files cover a narrow time period; otherwise, the sounding will be overwritten by data provided by the user, which is explained below. The particle types are most sensitive to temperature, Zh, Zdr, and the standard deviations of Zdr and PhiDP. 
 
 ## Sounding data
-If sounding data varies in time, sounding data in a non-gridded data format (SPDB) will need to be ingested. SPDB data can come from either observations or numerical simulations (e.g., RAP or HRRR). For additional information regarding this data format, please see the documentation here (**insert link**).
+If sounding data varies in time, sounding data in a non-gridded data format (SPDB) will need to be ingested. SPDB data can come from either observations or numerical simulations (e.g., RAP or HRRR). For additional information regarding this data format, please see the documentation here (**insert link when written**).
 
 ## Precipitation rate coefficients and thresholds
-RadxPartRain has the capability to calculate four different precipitation rates using techniques dependent upon a mixture of the PID category and formulas dependent upon polarimetric values. Each algorithm requires user-defined polarimetric variable thresholds (typically Zh, Zdr, and KDP) and precipitation rate coefficients and exponents to determine the appropriate precipitation rate formula. The user should choose values appropriate for the specific radar and precipitation type (e.g., tropical vs continental, stratiform vs convective). These values can be set manually within the parameter file below, but  users may find it easier to create a separate bash file that can set variables using the Unix 'source' command.
+RadxPartRain has the capability to calculate four different precipitation rates relying on a combination of the PID category and formulas dependent upon polarimetric values. Each algorithm requires user-defined polarimetric variable thresholds (typically Zh, Zdr, and KDP) and precipitation rate coefficients/exponents to determine the appropriate precipitation rate formula. The user should choose values appropriate for the specific radar and precipitation type (e.g., tropical vs continental, stratiform vs convective). These values can be set manually within the parameter file below, but users may find it easier to create a separate bash file that sets environment variables using the Unix 'source' command.
 
 ## Parameter file
-Once the data, thresholds, and coefficients have been collected, the parameter file will need to be updated accordingly.
+Once the data, thresholds, and coefficients have been collected, the parameter file needs to be updated accordingly.
 
 ### Ensure parameter file is up to date
 To obtain the default parameter file, use the following command:
@@ -32,7 +32,7 @@ If you already have a parameter file and simply want to check for (and add) upda
 ```
 
 ### Specific parameters to edit
-Caution: this is not a complete list. We urge each user to read through the entire parameter file carefully.
+Caution: this is not an exhaustive list. We urge each user to read through the entire parameter file carefully.
 #### Input params
 - input_dir: directory containing radar data (if not specified on the command line and if mode = REALTIME)
 - mode: determines if the program waits for new files or if files are specified in a directory
@@ -46,15 +46,15 @@ Caution: this is not a complete list. We urge each user to read through the enti
 (include the numerous other choices?)
 #### Precip-induced attenuation correction for DBZ and ZDR
 - apply_precip_attenuation_correction: determines whether application with produce extra fields that estimate and correct for attenuation in DBZ and ZDR
-- specify_coefficients_for_attenuation_correction: the user can either set the coefficients themselves or have the application determine default coefficients for the radar wavelength
+- specify_coefficients_for_attenuation_correction: the user can either set the coefficients themselves or have the application determine default coefficients based on the radar wavelength
 #### Computing PID
 - pid_thresholds_file_path: file path for the PID thresholds file
 - PID_snr_threshold: mininmum SNR required for the PID to be calculated
-- PID_min_valid_interest: mininimum interest value required for a PID category to be accepted
+- PID_min_valid_interest: mininimum interest value required in order for a PID category to be accepted
 - PID_apply_median_filter_to_VARIABLE: determines whether RadxPartRain applies a filter to polarimetric radar data before running the PID
 - PID_ngates_for_sdev: sets the number of gates used to calculate the standard deviations of ZDR and PHIDP
 #### Sounding input for PID temperatures
-- use_soundings_from_spdb: tells RadxPartRain whether to use the sounding from the pid thresholds file or from SPDB files
+- use_soundings_from_spdb: tells RadxPartRain whether to override the sounding in the pid thresholds file with SPDB data
 - sounding_spdb_url: directory where SPDB files are located
 - sounding_search_time_margin_secs: sets the maximum allowable time difference between the radar files and sounding data
 - sounding_location_name: tells RadxPartRain the name of the radar so that the appropriate soundings can be used
@@ -72,7 +72,7 @@ Parameters in this section determine the specific thresholds, coefficients, and 
 #### Specifying copy-through fields
 - copy_input_fields_to_output: determines whether fields from the original cfradial files are copied to the final file (e.g., Zh, ZDR)
 #### Output format
-- output_format: select the preferred file type
+- output_format: select the preferred file type (usually CFRADIAL)
 - netcdf_style: if output_format is CFRADIAL, specify the netCDF format
 #### Output directory
 - output_dir: files will be written to this directory
@@ -84,9 +84,9 @@ To check all command line options for RadxPartRain, including debugging options 
 ```
 Once your parameter file is complete, use a command similar to the following to run the application:
 ```
-/path/to/Radx/apps/RadxBeamBlock -params param_file_name
+/path/to/Radx/apps/RadxPartRain -params param_file_name
 ```
 The user can also specify the location of cfradial files in the following manner:
 ```
-/path/to/Radx/apps/RadxBeamBlock -f /path/to/cfradial/files/ -params param_file_name
+/path/to/Radx/apps/RadxPartRain -f /path/to/cfradial/files/ -params param_file_name
 ```
