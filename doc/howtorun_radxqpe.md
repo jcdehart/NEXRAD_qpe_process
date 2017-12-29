@@ -1,5 +1,5 @@
 # RadxQpe
-This document describes RadxQpe, which takes the three-dimensional output from RadxPartRain and determines the precipitation rate closest to the surface that satisfies the necessary thresholds in terms of blockage by terrain, .
+RadxQpe takes the three-dimensional output from RadxPartRain and determines the precipitation rate closest to the surface that satisfies beam blockage and data quality requirements.
 
 ## Prerequesites
 The following items are required:
@@ -7,7 +7,7 @@ The following items are required:
 - RadxBeamBlock output files (cfradial)
 
 ## Parameter file
-The parameter file will need to be updated accordingly.
+The parameter file will need to be updated to include the location of RadxPartRain and RadxBeamBlock files, in addition to data quality thresholds set by the user.
 
 ### Ensure parameter file is up to date
 To obtain the default parameter file, use the following command:
@@ -20,7 +20,7 @@ If you already have a parameter file and simply want to check for (and add) upda
 ```
 
 ### Specific parameters to edit
-Caution: this is not a complete list. We urge each user to read through the entire parameter file carefully.
+Caution: this is not an exhaustive list. We urge each user to read through the entire parameter file carefully.
 #### Algorithm parameters
 - azimuthal_resolution_degrees: sets the azimuthal resolution of the output files
 - min_snr: if the SNR lies below this threshold for a gate, a higher elevation angle is used
