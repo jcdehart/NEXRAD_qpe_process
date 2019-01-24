@@ -19,10 +19,10 @@ Set this to a file suitable for the radar transmit mode and wavelength:
 
 | Wavelength                | Transmit mode | thresholds_file_example |
 | -------------             | ------------- | ----------------------- |
-| S-band                    | Simultaneous  | [pid_thresholds.sband.shv](pid_thresholds.sband.shv.md) |
-| S-band                    | Alternating   | [pid_thresholds.sband.alt](pid_thresholds.sband.alt.md) |
-| C-band                    | Simultaneous  | [pid_thresholds.cband.shv](pid_thresholds.cband.shv.md) |
-| X-band                    | Simultaneous  | [pid_thresholds.xband.shv](pid_thresholds.xband.shv.md) |
+| S-band                    | Simultaneous  | [pid_thresholds.sband.shv](./pid_thresholds.sband.shv.md) |
+| S-band                    | Alternating   | [pid_thresholds.sband.alt](./pid_thresholds.sband.alt.md) |
+| C-band                    | Simultaneous  | [pid_thresholds.cband.shv](./pid_thresholds.cband.shv.md) |
+| X-band                    | Simultaneous  | [pid_thresholds.xband.shv](./pid_thresholds.xband.shv.md) |
 
 ## Sounding data
 If sounding data varies in time, sounding data in a non-gridded data format (SPDB) will need to be ingested. SPDB data can come from either observations or numerical simulations (e.g., RAP or HRRR). For additional information regarding this data format, please see the documentation here (**insert link when written**).
