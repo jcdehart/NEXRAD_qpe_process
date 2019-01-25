@@ -4,13 +4,13 @@ RadxKdp ingests polarimetric radar data and calculates KDP from PHIDP.
 ## Prerequesites
 The following items are required:
 - Polarimetric radar data (any Radx supported format, e.g., cfradial)
-- Two parameter files to run RadxKdp and to set KDP.
+- Two parameter files to run RadxKdp and to calculate KDP.
 
 ## Overview
 RadxKdp uses a couple different methods to calculate KDP from PHIDP. In general, KDP is calculated from the PHIDP slope between range gates (after smoothing and unfolding the PHIDP data). Filtering smears out KDP in range, so an additional field (KDP_SC) is constrained by KDP estimated theoretically from Z and ZDR.
 
 ## Parameter files
-RadxKdp uses two separate parameter files. The first includes the basic parameters related to data location and field names, which is similar to the parameter files for the other applications. The second includes the parameters that set the filtering length, method, and relevant coefficients necessary to calculate KDP and estimate attenuation.
+RadxKdp uses two separate parameter files. The first includes the basic parameters related to data location and field names, which is similar to the parameter files for the other Radx applications. The second includes the parameters that set the filtering length, method, and relevant coefficients necessary to calculate KDP and estimate attenuation.
 
 ### 1) Main parameter file
 #### Ensure file is up to date
@@ -64,7 +64,7 @@ Handling phase shift on backscatter (PSOB)
 ```
 
 ## Running RadxKdp
-To check all command line options for RadxPartRain, including debugging options and file paths, type the following command into a terminal.
+To check all command line options for RadxKdp, including debugging options and file paths, type the following command into a terminal.
 ```
 lrose -- RadxKdp -h
 ```
