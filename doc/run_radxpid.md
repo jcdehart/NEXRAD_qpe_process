@@ -44,11 +44,13 @@ lrose -- RadxPid -params orig_param_file_name -print_params > new_param_file_nam
 ```
 Input params
 - input_dir: directory containing radar data (if not specified on the command line and if mode = REALTIME)
-- mode: determines if the program waits for new files or if files are specified in a directory
-
+- mode: determines if the program waits for new files (REALTIME),
+    moves through start and end times specified on the command line (ARCHIVE),
+    or moves through list of files specified on the command line (FILELIST)
+    
 Input field information
 - SNR_available: determines if SNR data is in the file or needs to be calculated from DBZ 
-- VARIABLE_field_name: tells RadxKdp the polarimetric variable names in the ingested cfradial files 
+- VARIABLE_field_name: tells RadxPid the polarimetric variable names in the ingested cfradial files 
 - LDR_available: determines if LDR data is in the file
 
 Computing KDP
@@ -100,12 +102,12 @@ NCAR PID Method
 - pid_thresholds_file_path: file path for the PID thresholds file
 
 Sounding input for PID temperatures
-- use_soundings_from_spdb: tells RadxPartRain whether to override the sounding in the pid thresholds file with SPDB data
+- use_soundings_from_spdb: tells RadxPid whether to override the sounding in the pid thresholds file with SPDB data
 - PID_sounding_spdb_url: path to SPDB sounding data
 ```
 
 ## Running RadxPid
-To check all command line options for RadxPartRain, including debugging options and file paths, type the following command into a terminal.
+To check all command line options for RadxPid, including debugging options and file paths, type the following command into a terminal.
 ```
 lrose -- RadxPid -h
 ```
@@ -137,7 +139,8 @@ Precip-induced attenuation correction for DBZ and ZDR
 Computing PID
 - PID_snr_threshold: mininmum SNR required for the PID to be calculated
 - PID_min_valid_interest: mininimum interest value required in order for a PID category to be accepted
-- PID_apply_median_filter_to_VARIABLE: determines whether RadxPid applies a filter to polarimetric radar data before running the PID
+- PID_apply_median_filter_to_VARIABLE: determines whether RadxPid applies a filter to specific polarimetric variables
+    before running the PID
 - PID_ngates_for_sdev: sets the number of gates used to calculate the standard deviations of ZDR and PHIDP
 
 Sounding input for PID temperatures
