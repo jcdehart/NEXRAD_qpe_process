@@ -10,10 +10,10 @@ The following items are required:
 - Parameter files for KDP, PID, and Rate.
 
 ## Overview
-Overall, RadxRate extends the capabilities of RadxKdp and RadxPid by calculating hourly rain rates at each radar gate depending on the local PID category and polarimetric values. 
+Overall, RadxRate builds upon the capabilities of RadxKdp and RadxPid by calculating hourly rain rates at each radar gate depending on the local PID category and polarimetric values. It shares parameters files with those two applications. RadxRate will calculate the rain rates with either raw or attenuated-corrected data; the user can choose the option they prefer. The three-dimensional rain rates produced by RadxRate can be then used in RadxQpe to estimate the rain rate closest to the surface, after accounting for beam blockage, noise, and clutter.
 
 ## PID thresholds file
-These thresholds describe the membership functions for each combination of the PID category and polarimetric field as well as the variable weights for each particle type. The file also contains a place to enter a sounding, if the radar files cover a narrow time period; otherwise, the sounding will be overwritten by data provided by the user, which is explained below. The particle types are most sensitive to temperature, Zh, Zdr, and the standard deviations of Zdr and PhiDP. 
+These thresholds describe the membership functions for each combination of the PID category and polarimetric field as well as the variable weights for each particle type. The file also contains a place to enter a single sounding, if the data cover a narrow time period; otherwise, the sounding will be overwritten by data provided by the user, which is explained below. The particle types are most sensitive to temperature, Zh, Zdr, and the standard deviations of Zdr and PhiDP. 
 
 Set this to a file suitable for the radar transmit mode and wavelength:
 
@@ -31,7 +31,7 @@ If sounding data varies in time, sounding data in a non-gridded data format (SPD
 RadxRate has the capability to calculate four different precipitation rates relying on a combination of the PID category and formulas dependent upon polarimetric values. Each algorithm requires user-defined polarimetric variable thresholds (typically Zh, Zdr, and KDP) and precipitation rate coefficients/exponents to determine the appropriate precipitation rate formula. The user should choose values appropriate for the specific radar and precipitation type (e.g., tropical vs continental, stratiform vs convective). These values can be set manually within the parameter file below, but users may find it easier to create a separate bash file that sets environment variables using the Unix 'source' command.
 
 ## Parameter files
-RadxRate uses four separate parameter files. The first includes the basic parameters related to data location and field names, which is similar to the parameter files for the other applications. The second includes the parameters that set the filtering length, method, and relevant coefficients necessary to calculate KDP and estimate attenuation. The third specifies filter parameters and relevant information related to the soundings used by the PID. The fourth includes all the filters and coefficients necessary to calculate a variety of polarimetric-based rain rates.
+RadxRate uses four separate parameter files. The first includes the basic parameters related to data location and field names, which is similar to the parameter files for the other Radx applications. The second includes the parameters that set the filtering length, method, and relevant coefficients necessary to calculate KDP and estimate attenuation. The third specifies filter parameters and relevant information related to the soundings used by the PID. The fourth includes all the filters and coefficients necessary to calculate a variety of polarimetric-based rain rates.
 
 ### 1) Main parameter file
 #### Ensure file is up to date
@@ -48,11 +48,13 @@ lrose -- RadxRate -params orig_param_file_name -print_params > new_param_file_na
 ```
 Input params
 - input_dir: directory containing radar data (if not specified on the command line and if mode = REALTIME)
-- mode: determines if the program waits for new files or if files are specified in a directory
+- mode: determines if the program waits for new files (REALTIME),
+    moves through start and end times specified on the command line (ARCHIVE),
+    or moves through list of files specified on the command line (FILELIST)
 
 Input field information
 - SNR_available: determines if SNR data is in the file or needs to be calculated from DBZ 
-- VARIABLE_field_name: tells RadxKdp the polarimetric variable names in the ingested cfradial files 
+- VARIABLE_field_name: tells RadxRate the polarimetric variable names in the ingested cfradial files 
 - LDR_available: determines if LDR data is in the file
 
 Computing KDP
@@ -108,7 +110,7 @@ NCAR PID Method
 - pid_thresholds_file_path: file path for the PID thresholds file
 
 Sounding input for PID temperatures
-- use_soundings_from_spdb: tells RadxPartRain whether to override the sounding in the pid thresholds file with SPDB data
+- use_soundings_from_spdb: tells RadxRate whether to override the sounding in the pid thresholds file with SPDB data
 - PID_sounding_spdb_url: path to SPDB sounding data
 ```
 
@@ -127,7 +129,7 @@ lrose -- RadxRate -params_rate orig_param_file_name -print_params_rate > new_par
 All the parameters in this file are important as it contains all the coefficients for each available rain rate relationship. It is important to carefully read this entire file.
 
 ## Running RadxRate
-To check all command line options for RadxPartRain, including debugging options and file paths, type the following command into a terminal.
+To check all command line options for RadxRate, including debugging options and file paths, type the following command into a terminal.
 ```
 lrose -- RadxRate -h
 ```
@@ -152,19 +154,21 @@ Specifying copy-through fields
 #### KDP-specific parameter file
 ```
 Precip-induced attenuation correction for DBZ and ZDR
-- KDP_specify_coefficients_for_attenuation_correction: the user can either set the coefficients themselves or use the default coefficients based on the radar wavelength
+- KDP_specify_coefficients_for_attenuation_correction: the user can either set the coefficients 
+    or use the default coefficients based on the radar wavelength
 ```
 #### PID-specific parameter file
 ```
 Computing PID
 - PID_snr_threshold: mininmum SNR required for the PID to be calculated
 - PID_min_valid_interest: mininimum interest value required in order for a PID category to be accepted
-- PID_apply_median_filter_to_VARIABLE: determines whether RadxPid applies a filter to polarimetric radar data before running the PID
+- PID_apply_median_filter_to_VARIABLE: sets whether RadxRate applies a filter to specific polarimetric variables
+    before running the PID
 - PID_ngates_for_sdev: sets the number of gates used to calculate the standard deviations of ZDR and PHIDP
 
 Sounding input for PID temperatures
 - sounding_search_time_margin_secs: the maximum allowable time difference between the radar files and sounding data
-- sounding_location_name: directs RadxPid to the appropriate sounding
+- sounding_location_name: directs RadxRate to the appropriate sounding
 - sounding_required_pressure_range_hpa: sets the minimum pressure range required for a valid sounding
 - sounding_required_height_range_m: sets the minimum altitude range required for a valid sounding
 ```
