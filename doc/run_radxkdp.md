@@ -27,8 +27,10 @@ lrose -- RadxKdp -params orig_param_file_name -print_params > new_param_file_nam
 ```
 Input params
 - input_dir: directory containing radar data (if not specified on the command line and if mode = REALTIME)
-- mode: determines if the program waits for new files or if files are specified in a directory
-
+- mode: determines if the program waits for new files (REALTIME),
+    moves through start and end times specified on the command line (ARCHIVE),
+    or moves through list of files specified on the command line (FILELIST)
+    
 Input field information
 - SNR_available: determines if SNR data is in the file or needs to be calculated from DBZ 
 - VARIABLE_field_name: tells RadxKdp the polarimetric variable names in the ingested cfradial files 
