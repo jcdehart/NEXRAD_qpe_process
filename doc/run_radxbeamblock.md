@@ -12,7 +12,7 @@ The following items are required:
 Overall, RadxBeamBlock takes elevation data, the radar location, and radar characteristics to estimate how much blockage occurs due to terrain.
 
 ## Digital elevation model data
-The supported digital elevation models include Shuttle Radar Topography Mission and ESRI grid data (spheroid). 
+The supported digital elevation models include Shuttle Radar Topography Mission and ESRI grid data (spheroid). SRTM data can be found online [here](http://dds.cr.usgs.gov/srtm/version2_1/SRTM3).
 
 ## Radar location and characteristics
 The radar location requires the latitude, longitude, and elevation of the antenna (ground level + radar height). In addition, characteristics including the wavelength, beamwidth, gate spacing, azimuths, and elevation angles are required. 
