@@ -3,6 +3,7 @@ RadxQpe ingests three-dimensional output from RadxRate and determines the precip
 
 ## Prerequesites
 The following items are required:
+
 - Three-dimensional file of rain rates created by RadxRate (cfradial)
 - Beamblock file created by RadxBeamBlock (cfradial)
 - Parameter file for running RadxQpe
@@ -25,8 +26,9 @@ lrose -- RadxQpe -params orig_param_file_name -print_params > new_param_file_nam
 ```
 
 #### Important parameters
-```
+
 Inputs/outputs
+
 - data_url: directory containing the output from RadxRate
 - snr_field: name of the SNR field in the RadxRate files (empty if no field)
 - pid_field: name of the PID field in the RadxRate files 
@@ -34,14 +36,17 @@ Inputs/outputs
 - beam_block_field: field name of the maximum beam blockage percentage (accumulated)
 
 Polar output format
+
 - output_format: select the preferred file type
 
 Polar output directory and filename
+
 - output_dir: file will be written to this directory (set to empty if the user does not want polar output)
 
 Cartesian grid projection and XY details, and output specification
+
 - output_cartesian_dir: file will be written to this directory (set to empty if the user does not want cartesian output)
-```
+
 
 ## Running RadxQpe
 To check all command line options for RadxQpe, including debugging options and file paths, type the following command into a terminal.
@@ -62,8 +67,9 @@ lrose -- RadxQpe -f /path/to/cfradial/files/ -params param_file_name
 ### Additional parameters to edit
 Caution: this is not an exhaustive list. We urge each user to read through the entire parameter file carefully.
 #### Main parameter file
-```
+
 Algorithm parameters
+
 - azimuthal_resolution_degrees: sets the azimuthal resolution of the output files
 - min_snr: if the SNR lies below this threshold for a gate, a higher elevation angle is used
 - max_beam_block_percent: beam blockage percentage must be below this threshold or else a higher elevation angle will be used
@@ -71,14 +77,16 @@ Algorithm parameters
 - min_valid_precip_rate: any precipitation rates less than this threshold will be set to 0
 
 Inputs/outputs
+
 - rainrate_fields: sets the precipitation rates that are saved to the final files; the user can choose their preferred rate from the four options
 - output_fields: additional fields the user would like to see in the final files
 
 Cartesian grid projection and XY details, and output specification
+
 - grid_projection: map projection for the cartesian grid
 - grid_xy_geom: sets the lower left corner of the cartesian grid, grid size, and grid spacing
 - center_grid_on_radar: centers the grid on the radar and not a (lat, lon) location
 - min_nvalid_for_interp: the number of points required for interpolation to occur
 - set_discrete_fields: option to use discrete values for certain fields instead of interpolation
 - discrete_fields: list of fields that should use nearest neighbor instead of interpolation (e.g., PID)
-```
+
