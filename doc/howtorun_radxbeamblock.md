@@ -3,6 +3,7 @@ RadxBeamBlock estimates the amount of beam blockage due to terrain near a radar.
 
 ## Prerequesites
 The following items are required:
+
 - Digital elevation model data
 - Radar antenna location
 - Radar characteristics
@@ -32,24 +33,27 @@ lrose -- RadxBeamBlock -params orig_param_file_name -print_params > new_param_fi
 ```
 
 #### Important parameters
-```
+
 Input params
+
 - input_dem_parth: directory containing the elevation data
 - input_data_format: specifies the format of the elevation data (examples provided in the parameter file)
 
 Radar parameters
+
 - radar_location: latitude, longitude, and elevation (ground elevation + radar height in km) of the radar antenna 
 - radar_wavelength_cm: radar wavelength (cm)
 - horiz_beam_width_deg: horizontal beamwidth (degrees)
 - vert_beam_width_deg: horizontal beamwidth (degrees)
 - gates: starting distance, gate spacing (km), and number of gates
 - azimuths: starting azimuth, azimuth spacing (degrees), and number of azimuths
-- elevations; starting elevation angle, angle spacing (degrees), and number of elevation angles
+- elevations: starting elevation angle, angle spacing (degrees), and number of elevation angles
 
 Output directory and file name
+
 - output_dir: files will be written to this directory
 - output_format: select the preferred file type (usually CFRADIAL)
-```
+
 
 ## Running RadxBeamBlock
 To check all command line options for RadxRate, including debugging options and file paths, type the following command into a terminal.
