@@ -3,6 +3,7 @@ RadxKdp ingests polarimetric radar data and calculates KDP from PHIDP.
 
 ## Prerequesites
 The following items are required:
+
 - Polarimetric radar data (any Radx supported format, e.g., cfradial)
 - Two parameter files to run RadxKdp and to calculate KDP.
 
@@ -24,26 +25,31 @@ lrose -- RadxKdp -params orig_param_file_name -print_params > new_param_file_nam
 ```
 
 #### Important parameters
-```
+
 Input params
+
 - input_dir: directory containing radar data (if not specified on the command line and if mode = REALTIME)
 - mode: determines if the program waits for new files (REALTIME),
     moves through start and end times specified on the command line (ARCHIVE),
     or moves through list of files specified on the command line (FILELIST)
     
 Input field information
+
 - SNR_available: determines if SNR data is in the file or needs to be calculated from DBZ 
 - VARIABLE_field_name: tells RadxKdp the polarimetric variable names in the ingested cfradial files 
 
 Computing KDP
+
 - KDP_params_file_path: path to the KDP-specific parameter file
 
 Output format
+
 - output_format: select the preferred file type (usually CFRADIAL)
 
 Output directory
+
 - output_dir: files will be written to this directory
-```
+
 
 ### 2) KDP-specific parameter file
 #### Ensure file is up to date
@@ -57,13 +63,15 @@ lrose -- RadxKdp -params_kdp orig_param_file_name -print_params_kdp > new_param_
 ```
 
 #### Important parameters
-```
+
 Unfolding and filtering
+
 - KDP_fir_filter_len: Filter length applied to PHIDP
 
 Handling phase shift on backscatter (PSOB)
+
 - KDP_psob_method: Method to handle PSOB
-```
+
 
 ## Running RadxKdp
 To check all command line options for RadxKdp, including debugging options and file paths, type the following command into a terminal.
