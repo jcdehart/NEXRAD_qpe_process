@@ -1,0 +1,40 @@
+wget -r https://dds.cr.usgs.gov/srtm/version2_1/SRTM3/North_America/
+
+That actually downloads the entire globe into a subdirectory:
+
+  dds.cr.usgs.gov/srtm/version2_1/SRTM3/
+
+plus some other data you don't need. But this is the quickest way to do the download.
+
+And then you can move SRTM3 to where-ever it is needed. And you need to unzip the files.
+ 
+The Eurasia subdirectory probably has the Taiwan files
+
+1) Downloading GFS data
+https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs
+Select the HAS option for the 0.5º domain (the first GFS analysis available)
+On the next page, select all available UTC cycles (00, 06, 12, 18) and the start and end dates
+Select the batch option and enter your email address
+You'll receive an email when the data is ready; use the order download guide to download it to maui (I usually use option 2.2 (wget) to download the files, just modify the HAS01***** portion to whatever the emails says your order number is)
+
+2) Set up directories
+Screen Shot 2019-06-11 at 10.25.39 AM.png
+I usually put the files in a folder called gfs within the project directory. (this is with the old Radx programs, yours would look similar except partrain == rate)
+Extract the grb2 files using this command in terminal: for f in *.tar; do tar xf "$f"; done
+Delete the tar files: rm -f *.tar (**be careful with rm -f as it deletes everything without asking**)
+
+3) Set up parameter files to convert model data to soundings
+Get parameter files for Grib2toMdv and Mdv2SoundingSpdb (you can rsync the two that are in my directory /bell-scratch/jcdehart/forJaime/params)
+Edit grid info (set up to be a 20ºx20º box around radar location) in Grib2toMdv.gfs.co line 792: 
+out_grid_info = {
+    nx = 200,
+    ny = 200,
+    minx = -115, **** change to radar lon-10º
+    miny = 30 , **** change to radar lat-10º
+    dx = 0.1,
+    dy = 0.1
+};
+
+Step 3b) Edit Mdv2SoundingSpdb.ruc
+line 284: station_locations
+Replace the name, lat, lon, altitude with the relevant details from the Taiwan radar. If you'll be using more than 1 radar, we can deal with that later.
